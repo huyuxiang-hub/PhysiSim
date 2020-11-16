@@ -1,0 +1,1 @@
+DsG4OpAbsReemit_cc_dependencies =  ../src/DsG4OpAbsReemit.cc   /afs/ihep.ac.cn/users/h/huyuxiang/junofs/juno_centos7/offline/Simulation/DetSimV2/PhysiSim/include/DsG4OpAbsReemit.h  $(bin)PhysiSim_deps/DsG4OpAbsReemit_cc.stamp
