@@ -146,13 +146,15 @@ void DsPhysConsOptical::ConstructProcess()
 
         scint_ = scint;
 
-    } else if (m_useScintillation && 0) { // default G4
+    }else if (m_useScintillation && 0) { // default G4
         G4Scintillation* scint = 0;  
         scint = new G4Scintillation();
         scint->SetScintillationYieldFactor(m_ScintillationYieldFactor); // 1.);
         scint->SetTrackSecondariesFirst(m_doTrackSecondariesFirst);
         scint_ = scint;
-    } else if (1 && m_useScintSimple){
+    } 
+
+ if (1 && m_useScintSimple){
         LogInfo<<"Scintillation physics process : ScintSample is used"<<std::endl;
         DsG4ScintSimple * scint= new DsG4ScintSimple();
         scint->SetDoQuenching(m_enableQuenching);
