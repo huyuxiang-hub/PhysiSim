@@ -1,0 +1,1 @@
+G4Cerenkov_modified_cc_dependencies =  ../src/G4Cerenkov_modified.cc   /afs/ihep.ac.cn/users/h/huyuxiang/junofs/juno_centos7/offline/Simulation/DetSimV2/PhysiSim/include/G4Cerenkov_modified.hh  $(bin)PhysiSim_deps/G4Cerenkov_modified_cc.stamp

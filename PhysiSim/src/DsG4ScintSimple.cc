@@ -288,9 +288,9 @@ DsG4ScintSimple::PostStepDoIt(const G4Track& aTrack, const G4Step& aStep)
     }
 
     const G4MaterialPropertyVector* Fast_Intensity = 
-        aMaterialPropertiesTable->GetProperty("FASTCOMPONENT"); 
+        aMaterialPropertiesTable->GetProperty("PPOCOMPONENT"); 
     const G4MaterialPropertyVector* Slow_Intensity =
-        aMaterialPropertiesTable->GetProperty("SLOWCOMPONENT");
+        aMaterialPropertiesTable->GetProperty("PPOCOMPONENT");
     const G4MaterialPropertyVector* Reemission_Prob =
         aMaterialPropertiesTable->GetProperty("REEMISSIONPROB");
     if (verboseLevel > 0 ) {
@@ -349,7 +349,7 @@ DsG4ScintSimple::PostStepDoIt(const G4Track& aTrack, const G4Step& aStep)
         
         G4double ScintillationYield = 0;
         {// Yield.  Material must have this or we lack raisins dayetras
-            const G4MaterialPropertyVector* ptable =
+            /*const G4MaterialPropertyVector* ptable =
                 aMaterialPropertiesTable->GetProperty("SCINTILLATIONYIELD");
             if (!ptable) {
                 G4cout << "ConstProperty: failed to get SCINTILLATIONYIELD"
@@ -357,6 +357,9 @@ DsG4ScintSimple::PostStepDoIt(const G4Track& aTrack, const G4Step& aStep)
                 return G4VRestDiscreteProcess::PostStepDoIt(aTrack, aStep);
             }
             ScintillationYield = ptable->Value(0);
+            std::cout<<"ScintillationYield = "<<ScintillationYield<<std::endl;*/
+            ScintillationYield = aMaterialPropertiesTable->GetConstProperty("SCINTILLATIONYIELD");
+           // std::cout<<"const ScintillationYield = "<<ScintillationYield<<std::endl;
         }
         if (verboseLevel > 0) {
             G4cout << __LINE__ << " ScintillationYield: " << ScintillationYield
@@ -806,7 +809,8 @@ void DsG4ScintSimple::BuildThePhysicsTable()
         if (aMaterialPropertiesTable) {
 
             G4MaterialPropertyVector* theFastLightVector = 
-                aMaterialPropertiesTable->GetProperty("FASTCOMPONENT");
+                //aMaterialPropertiesTable->GetProperty("FASTCOMPONENT");
+                aMaterialPropertiesTable->GetProperty("PPOCOMPONENT");
 
             if (theFastLightVector) {
               if (verboseLevel > 0) {
@@ -895,7 +899,8 @@ void DsG4ScintSimple::BuildThePhysicsTable()
             }
 
             G4MaterialPropertyVector* theSlowLightVector =
-                aMaterialPropertiesTable->GetProperty("SLOWCOMPONENT");
+                //aMaterialPropertiesTable->GetProperty("SLOWCOMPONENT");
+                aMaterialPropertiesTable->GetProperty("PPOCOMPONENT");
 
             if (theSlowLightVector) {
               if (verboseLevel > 0) {

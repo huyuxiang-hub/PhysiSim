@@ -40,6 +40,8 @@ private:
     bool m_useScintSimple; // decide to use orig with reemission or simple one.
     bool m_useAbsReemit;
 
+    std::string m_useCerenkovType; // original, modified (default)
+
     // wangzhe: Apply QE for water cerenkov process when OP is created?
     // See DsG4Cerenkov and Doc 3925 for details
     bool m_applyWaterQe;
@@ -55,6 +57,11 @@ private:
     /// Maximum number of photons per step to limit step size.  This
     /// value is independent from PhotonScaleWeight.  Default is 300.
     int m_cerenMaxPhotonPerStep;
+
+    // Property: CerenPhotonStack
+    // if ture: the cerenkov photons are generated.
+    // if false: the number will be calculated, but no photons generated.
+    bool m_cerenPhotonStack;
 
     /// ScintPhotonScaleWeight: Scale down number of produced
     /// scintillation photons by this much

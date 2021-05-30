@@ -3,7 +3,7 @@
 #====================================
 #  Library PhysiSim
 #
-#   Generated Wed Nov 11 11:00:46 2020  by huyuxiang
+#   Generated Sun May 30 15:48:45 2021  by huyuxiang
 #
 #====================================
 
@@ -110,7 +110,7 @@ PhysiSimprototype :  ;
 
 endif
 
-PhysiSimcompile : $(bin)DsG4Scintillation.o $(bin)LocalG4Cerenkov1042.o $(bin)DsPhysConsOptical.o $(bin)DsG4HadronPhysicsQGSP_BERT_HP.o $(bin)DsG4NeutronPHPBuilder.o $(bin)DsG410NNDCParticleHPCaptureFS.o $(bin)DsG410GdParticleHPCaptureFS.o $(bin)DsG4ParticleHPCapture.o $(bin)DsG4GdCaptureGammas.o $(bin)DsG4EmLivermorePhysics.o $(bin)G4Positronium.o $(bin)G4PositroniumFormation.o $(bin)G4PositroniumDecayChannel2G.o $(bin)G4PositroniumDecayChannel3G.o $(bin)DsG4NNDCCaptureGammas.o $(bin)DsG4EmLivermorePhysics.o $(bin)DsG4ScintSimple.o $(bin)DsG4OpAbsReemit.o ;
+PhysiSimcompile : $(bin)DsG4Scintillation.o $(bin)LocalG4Cerenkov1042.o $(bin)DsPhysConsOptical.o $(bin)DsG4HadronPhysicsQGSP_BERT_HP.o $(bin)DsG4NeutronPHPBuilder.o $(bin)DsG410NNDCParticleHPCaptureFS.o $(bin)DsG410GdParticleHPCaptureFS.o $(bin)DsG4ParticleHPCapture.o $(bin)DsG4GdCaptureGammas.o $(bin)DsG4EmLivermorePhysics.o $(bin)G4Positronium.o $(bin)G4PositroniumFormation.o $(bin)G4PositroniumDecayChannel2G.o $(bin)G4PositroniumDecayChannel3G.o $(bin)DsG4NNDCCaptureGammas.o $(bin)DsG4EmLivermorePhysics.o $(bin)DsG4ScintSimple.o $(bin)DsG4OpAbsReemit.o $(bin)G4Cerenkov_modified.o ;
 
 #-- end of libary_header ----------------
 #-- start of libary ----------------------
@@ -118,10 +118,10 @@ PhysiSimcompile : $(bin)DsG4Scintillation.o $(bin)LocalG4Cerenkov1042.o $(bin)Ds
 PhysiSimLIB :: $(PhysiSimlib) $(PhysiSimshstamp)
 	$(echo) "PhysiSim : library ok"
 
-$(PhysiSimlib) :: $(bin)DsG4Scintillation.o $(bin)LocalG4Cerenkov1042.o $(bin)DsPhysConsOptical.o $(bin)DsG4HadronPhysicsQGSP_BERT_HP.o $(bin)DsG4NeutronPHPBuilder.o $(bin)DsG410NNDCParticleHPCaptureFS.o $(bin)DsG410GdParticleHPCaptureFS.o $(bin)DsG4ParticleHPCapture.o $(bin)DsG4GdCaptureGammas.o $(bin)DsG4EmLivermorePhysics.o $(bin)G4Positronium.o $(bin)G4PositroniumFormation.o $(bin)G4PositroniumDecayChannel2G.o $(bin)G4PositroniumDecayChannel3G.o $(bin)DsG4NNDCCaptureGammas.o $(bin)DsG4EmLivermorePhysics.o $(bin)DsG4ScintSimple.o $(bin)DsG4OpAbsReemit.o
+$(PhysiSimlib) :: $(bin)DsG4Scintillation.o $(bin)LocalG4Cerenkov1042.o $(bin)DsPhysConsOptical.o $(bin)DsG4HadronPhysicsQGSP_BERT_HP.o $(bin)DsG4NeutronPHPBuilder.o $(bin)DsG410NNDCParticleHPCaptureFS.o $(bin)DsG410GdParticleHPCaptureFS.o $(bin)DsG4ParticleHPCapture.o $(bin)DsG4GdCaptureGammas.o $(bin)DsG4EmLivermorePhysics.o $(bin)G4Positronium.o $(bin)G4PositroniumFormation.o $(bin)G4PositroniumDecayChannel2G.o $(bin)G4PositroniumDecayChannel3G.o $(bin)DsG4NNDCCaptureGammas.o $(bin)DsG4EmLivermorePhysics.o $(bin)DsG4ScintSimple.o $(bin)DsG4OpAbsReemit.o $(bin)G4Cerenkov_modified.o
 	$(lib_echo) "static library $@"
 	$(lib_silent) [ ! -f $@ ] || \rm -f $@
-	$(lib_silent) $(ar) $(PhysiSimlib) $(bin)DsG4Scintillation.o $(bin)LocalG4Cerenkov1042.o $(bin)DsPhysConsOptical.o $(bin)DsG4HadronPhysicsQGSP_BERT_HP.o $(bin)DsG4NeutronPHPBuilder.o $(bin)DsG410NNDCParticleHPCaptureFS.o $(bin)DsG410GdParticleHPCaptureFS.o $(bin)DsG4ParticleHPCapture.o $(bin)DsG4GdCaptureGammas.o $(bin)DsG4EmLivermorePhysics.o $(bin)G4Positronium.o $(bin)G4PositroniumFormation.o $(bin)G4PositroniumDecayChannel2G.o $(bin)G4PositroniumDecayChannel3G.o $(bin)DsG4NNDCCaptureGammas.o $(bin)DsG4EmLivermorePhysics.o $(bin)DsG4ScintSimple.o $(bin)DsG4OpAbsReemit.o
+	$(lib_silent) $(ar) $(PhysiSimlib) $(bin)DsG4Scintillation.o $(bin)LocalG4Cerenkov1042.o $(bin)DsPhysConsOptical.o $(bin)DsG4HadronPhysicsQGSP_BERT_HP.o $(bin)DsG4NeutronPHPBuilder.o $(bin)DsG410NNDCParticleHPCaptureFS.o $(bin)DsG410GdParticleHPCaptureFS.o $(bin)DsG4ParticleHPCapture.o $(bin)DsG4GdCaptureGammas.o $(bin)DsG4EmLivermorePhysics.o $(bin)G4Positronium.o $(bin)G4PositroniumFormation.o $(bin)G4PositroniumDecayChannel2G.o $(bin)G4PositroniumDecayChannel3G.o $(bin)DsG4NNDCCaptureGammas.o $(bin)DsG4EmLivermorePhysics.o $(bin)DsG4ScintSimple.o $(bin)DsG4OpAbsReemit.o $(bin)G4Cerenkov_modified.o
 	$(lib_silent) $(ranlib) $(PhysiSimlib)
 	$(lib_silent) cat /dev/null >$(PhysiSimstamp)
 
@@ -151,8 +151,8 @@ $(PhysiSimshstamp) :: $(PhysiSimlibname).$(shlibsuffix)
 
 PhysiSimclean ::
 	$(cleanup_echo) objects PhysiSim
-	$(cleanup_silent) /bin/rm -f $(bin)DsG4Scintillation.o $(bin)LocalG4Cerenkov1042.o $(bin)DsPhysConsOptical.o $(bin)DsG4HadronPhysicsQGSP_BERT_HP.o $(bin)DsG4NeutronPHPBuilder.o $(bin)DsG410NNDCParticleHPCaptureFS.o $(bin)DsG410GdParticleHPCaptureFS.o $(bin)DsG4ParticleHPCapture.o $(bin)DsG4GdCaptureGammas.o $(bin)DsG4EmLivermorePhysics.o $(bin)G4Positronium.o $(bin)G4PositroniumFormation.o $(bin)G4PositroniumDecayChannel2G.o $(bin)G4PositroniumDecayChannel3G.o $(bin)DsG4NNDCCaptureGammas.o $(bin)DsG4EmLivermorePhysics.o $(bin)DsG4ScintSimple.o $(bin)DsG4OpAbsReemit.o
-	$(cleanup_silent) /bin/rm -f $(patsubst %.o,%.d,$(bin)DsG4Scintillation.o $(bin)LocalG4Cerenkov1042.o $(bin)DsPhysConsOptical.o $(bin)DsG4HadronPhysicsQGSP_BERT_HP.o $(bin)DsG4NeutronPHPBuilder.o $(bin)DsG410NNDCParticleHPCaptureFS.o $(bin)DsG410GdParticleHPCaptureFS.o $(bin)DsG4ParticleHPCapture.o $(bin)DsG4GdCaptureGammas.o $(bin)DsG4EmLivermorePhysics.o $(bin)G4Positronium.o $(bin)G4PositroniumFormation.o $(bin)G4PositroniumDecayChannel2G.o $(bin)G4PositroniumDecayChannel3G.o $(bin)DsG4NNDCCaptureGammas.o $(bin)DsG4EmLivermorePhysics.o $(bin)DsG4ScintSimple.o $(bin)DsG4OpAbsReemit.o) $(patsubst %.o,%.dep,$(bin)DsG4Scintillation.o $(bin)LocalG4Cerenkov1042.o $(bin)DsPhysConsOptical.o $(bin)DsG4HadronPhysicsQGSP_BERT_HP.o $(bin)DsG4NeutronPHPBuilder.o $(bin)DsG410NNDCParticleHPCaptureFS.o $(bin)DsG410GdParticleHPCaptureFS.o $(bin)DsG4ParticleHPCapture.o $(bin)DsG4GdCaptureGammas.o $(bin)DsG4EmLivermorePhysics.o $(bin)G4Positronium.o $(bin)G4PositroniumFormation.o $(bin)G4PositroniumDecayChannel2G.o $(bin)G4PositroniumDecayChannel3G.o $(bin)DsG4NNDCCaptureGammas.o $(bin)DsG4EmLivermorePhysics.o $(bin)DsG4ScintSimple.o $(bin)DsG4OpAbsReemit.o) $(patsubst %.o,%.d.stamp,$(bin)DsG4Scintillation.o $(bin)LocalG4Cerenkov1042.o $(bin)DsPhysConsOptical.o $(bin)DsG4HadronPhysicsQGSP_BERT_HP.o $(bin)DsG4NeutronPHPBuilder.o $(bin)DsG410NNDCParticleHPCaptureFS.o $(bin)DsG410GdParticleHPCaptureFS.o $(bin)DsG4ParticleHPCapture.o $(bin)DsG4GdCaptureGammas.o $(bin)DsG4EmLivermorePhysics.o $(bin)G4Positronium.o $(bin)G4PositroniumFormation.o $(bin)G4PositroniumDecayChannel2G.o $(bin)G4PositroniumDecayChannel3G.o $(bin)DsG4NNDCCaptureGammas.o $(bin)DsG4EmLivermorePhysics.o $(bin)DsG4ScintSimple.o $(bin)DsG4OpAbsReemit.o)
+	$(cleanup_silent) /bin/rm -f $(bin)DsG4Scintillation.o $(bin)LocalG4Cerenkov1042.o $(bin)DsPhysConsOptical.o $(bin)DsG4HadronPhysicsQGSP_BERT_HP.o $(bin)DsG4NeutronPHPBuilder.o $(bin)DsG410NNDCParticleHPCaptureFS.o $(bin)DsG410GdParticleHPCaptureFS.o $(bin)DsG4ParticleHPCapture.o $(bin)DsG4GdCaptureGammas.o $(bin)DsG4EmLivermorePhysics.o $(bin)G4Positronium.o $(bin)G4PositroniumFormation.o $(bin)G4PositroniumDecayChannel2G.o $(bin)G4PositroniumDecayChannel3G.o $(bin)DsG4NNDCCaptureGammas.o $(bin)DsG4EmLivermorePhysics.o $(bin)DsG4ScintSimple.o $(bin)DsG4OpAbsReemit.o $(bin)G4Cerenkov_modified.o
+	$(cleanup_silent) /bin/rm -f $(patsubst %.o,%.d,$(bin)DsG4Scintillation.o $(bin)LocalG4Cerenkov1042.o $(bin)DsPhysConsOptical.o $(bin)DsG4HadronPhysicsQGSP_BERT_HP.o $(bin)DsG4NeutronPHPBuilder.o $(bin)DsG410NNDCParticleHPCaptureFS.o $(bin)DsG410GdParticleHPCaptureFS.o $(bin)DsG4ParticleHPCapture.o $(bin)DsG4GdCaptureGammas.o $(bin)DsG4EmLivermorePhysics.o $(bin)G4Positronium.o $(bin)G4PositroniumFormation.o $(bin)G4PositroniumDecayChannel2G.o $(bin)G4PositroniumDecayChannel3G.o $(bin)DsG4NNDCCaptureGammas.o $(bin)DsG4EmLivermorePhysics.o $(bin)DsG4ScintSimple.o $(bin)DsG4OpAbsReemit.o $(bin)G4Cerenkov_modified.o) $(patsubst %.o,%.dep,$(bin)DsG4Scintillation.o $(bin)LocalG4Cerenkov1042.o $(bin)DsPhysConsOptical.o $(bin)DsG4HadronPhysicsQGSP_BERT_HP.o $(bin)DsG4NeutronPHPBuilder.o $(bin)DsG410NNDCParticleHPCaptureFS.o $(bin)DsG410GdParticleHPCaptureFS.o $(bin)DsG4ParticleHPCapture.o $(bin)DsG4GdCaptureGammas.o $(bin)DsG4EmLivermorePhysics.o $(bin)G4Positronium.o $(bin)G4PositroniumFormation.o $(bin)G4PositroniumDecayChannel2G.o $(bin)G4PositroniumDecayChannel3G.o $(bin)DsG4NNDCCaptureGammas.o $(bin)DsG4EmLivermorePhysics.o $(bin)DsG4ScintSimple.o $(bin)DsG4OpAbsReemit.o $(bin)G4Cerenkov_modified.o) $(patsubst %.o,%.d.stamp,$(bin)DsG4Scintillation.o $(bin)LocalG4Cerenkov1042.o $(bin)DsPhysConsOptical.o $(bin)DsG4HadronPhysicsQGSP_BERT_HP.o $(bin)DsG4NeutronPHPBuilder.o $(bin)DsG410NNDCParticleHPCaptureFS.o $(bin)DsG410GdParticleHPCaptureFS.o $(bin)DsG4ParticleHPCapture.o $(bin)DsG4GdCaptureGammas.o $(bin)DsG4EmLivermorePhysics.o $(bin)G4Positronium.o $(bin)G4PositroniumFormation.o $(bin)G4PositroniumDecayChannel2G.o $(bin)G4PositroniumDecayChannel3G.o $(bin)DsG4NNDCCaptureGammas.o $(bin)DsG4EmLivermorePhysics.o $(bin)DsG4ScintSimple.o $(bin)DsG4OpAbsReemit.o $(bin)G4Cerenkov_modified.o)
 	$(cleanup_silent) cd $(bin); /bin/rm -rf PhysiSim_deps PhysiSim_dependencies.make
 
 #-----------------------------------------------------------------
@@ -204,7 +204,7 @@ ifneq ($(MAKECMDGOALS),PhysiSimprototype)
 
 $(bin)PhysiSim_dependencies.make : $(use_requirements) $(cmt_final_setup_PhysiSim)
 	$(echo) "(PhysiSim.make) Rebuilding $@"; \
-	  $(build_dependencies) -out=$@ -start_all $(src)DsG4Scintillation.cc $(src)LocalG4Cerenkov1042.cc $(src)DsPhysConsOptical.cc $(src)DsG4HadronPhysicsQGSP_BERT_HP.cc $(src)DsG4NeutronPHPBuilder.cc $(src)DsG410NNDCParticleHPCaptureFS.cc $(src)DsG410GdParticleHPCaptureFS.cc $(src)DsG4ParticleHPCapture.cc $(src)DsG4GdCaptureGammas.cc $(src)DsG4EmLivermorePhysics.cc $(src)G4Positronium.cc $(src)G4PositroniumFormation.cc $(src)G4PositroniumDecayChannel2G.cc $(src)G4PositroniumDecayChannel3G.cc $(src)DsG4NNDCCaptureGammas.cc $(src)DsG4EmLivermorePhysics.cc $(src)DsG4ScintSimple.cc $(src)DsG4OpAbsReemit.cc -end_all $(includes) $(app_PhysiSim_cppflags) $(lib_PhysiSim_cppflags) -name=PhysiSim $? -f=$(cmt_dependencies_in_PhysiSim) -without_cmt
+	  $(build_dependencies) -out=$@ -start_all $(src)DsG4Scintillation.cc $(src)LocalG4Cerenkov1042.cc $(src)DsPhysConsOptical.cc $(src)DsG4HadronPhysicsQGSP_BERT_HP.cc $(src)DsG4NeutronPHPBuilder.cc $(src)DsG410NNDCParticleHPCaptureFS.cc $(src)DsG410GdParticleHPCaptureFS.cc $(src)DsG4ParticleHPCapture.cc $(src)DsG4GdCaptureGammas.cc $(src)DsG4EmLivermorePhysics.cc $(src)G4Positronium.cc $(src)G4PositroniumFormation.cc $(src)G4PositroniumDecayChannel2G.cc $(src)G4PositroniumDecayChannel3G.cc $(src)DsG4NNDCCaptureGammas.cc $(src)DsG4EmLivermorePhysics.cc $(src)DsG4ScintSimple.cc $(src)DsG4OpAbsReemit.cc $(src)G4Cerenkov_modified.cc -end_all $(includes) $(app_PhysiSim_cppflags) $(lib_PhysiSim_cppflags) -name=PhysiSim $? -f=$(cmt_dependencies_in_PhysiSim) -without_cmt
 
 -include $(bin)PhysiSim_dependencies.make
 
@@ -751,6 +751,36 @@ $(bin)PhysiSim_dependencies.make : $(src)DsG4OpAbsReemit.cc
 $(bin)$(binobj)DsG4OpAbsReemit.o : $(DsG4OpAbsReemit_cc_dependencies)
 	$(cpp_echo) $(src)DsG4OpAbsReemit.cc
 	$(cpp_silent) $(cppcomp) -o $@ $(use_pp_cppflags) $(PhysiSim_pp_cppflags) $(lib_PhysiSim_pp_cppflags) $(DsG4OpAbsReemit_pp_cppflags) $(use_cppflags) $(PhysiSim_cppflags) $(lib_PhysiSim_cppflags) $(DsG4OpAbsReemit_cppflags) $(DsG4OpAbsReemit_cc_cppflags)  $(src)DsG4OpAbsReemit.cc
+
+endif
+
+#-- end of cpp_library ------------------
+#-- start of cpp_library -----------------
+
+ifneq (,)
+
+ifneq ($(MAKECMDGOALS),PhysiSimclean)
+ifneq ($(MAKECMDGOALS),uninstall)
+-include $(bin)$(binobj)G4Cerenkov_modified.d
+
+$(bin)$(binobj)G4Cerenkov_modified.d :
+
+$(bin)$(binobj)G4Cerenkov_modified.o : $(cmt_final_setup_PhysiSim)
+
+$(bin)$(binobj)G4Cerenkov_modified.o : $(src)G4Cerenkov_modified.cc
+	$(cpp_echo) $(src)G4Cerenkov_modified.cc
+	$(cpp_silent) $(cppcomp)  -o $@ $(use_pp_cppflags) $(PhysiSim_pp_cppflags) $(lib_PhysiSim_pp_cppflags) $(G4Cerenkov_modified_pp_cppflags) $(use_cppflags) $(PhysiSim_cppflags) $(lib_PhysiSim_cppflags) $(G4Cerenkov_modified_cppflags) $(G4Cerenkov_modified_cc_cppflags)  $(src)G4Cerenkov_modified.cc
+endif
+endif
+
+else
+$(bin)PhysiSim_dependencies.make : $(G4Cerenkov_modified_cc_dependencies)
+
+$(bin)PhysiSim_dependencies.make : $(src)G4Cerenkov_modified.cc
+
+$(bin)$(binobj)G4Cerenkov_modified.o : $(G4Cerenkov_modified_cc_dependencies)
+	$(cpp_echo) $(src)G4Cerenkov_modified.cc
+	$(cpp_silent) $(cppcomp) -o $@ $(use_pp_cppflags) $(PhysiSim_pp_cppflags) $(lib_PhysiSim_pp_cppflags) $(G4Cerenkov_modified_pp_cppflags) $(use_cppflags) $(PhysiSim_cppflags) $(lib_PhysiSim_cppflags) $(G4Cerenkov_modified_cppflags) $(G4Cerenkov_modified_cc_cppflags)  $(src)G4Cerenkov_modified.cc
 
 endif
 

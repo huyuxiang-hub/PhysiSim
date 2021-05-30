@@ -1,7 +1,7 @@
 # echo "setup PhysiSim v0 in /afs/ihep.ac.cn/users/h/huyuxiang/junofs/juno_centos7/offline/Simulation/DetSimV2"
 
 if test "${CMTROOT}" = ""; then
-  CMTROOT=/cvmfs/juno.ihep.ac.cn/centos7_amd64_gcc830/Pre-Release/J20v2r0-branch/ExternalLibs/CMT/v1r26; export CMTROOT
+  CMTROOT=/cvmfs/juno.ihep.ac.cn/centos7_amd64_gcc830/Pre-Release/J21v1r0-branch-python3/ExternalLibs/CMT/v1r26; export CMTROOT
 fi
 . ${CMTROOT}/mgr/setup.sh
 cmtPhysiSimtempfile=`${CMTROOT}/mgr/cmt -quiet build temporary_name`

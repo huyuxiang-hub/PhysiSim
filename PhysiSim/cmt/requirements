@@ -20,7 +20,8 @@ library PhysiSim DsG4Scintillation.cc \
                  DsG4NNDCCaptureGammas.cc \ 
                  DsG4EmLivermorePhysics.cc\
                  DsG4ScintSimple.cc \
-                 DsG4OpAbsReemit.cc
+                 DsG4OpAbsReemit.cc \
+                 G4Cerenkov_modified.cc \
                 
 
 apply_pattern linker_library library=PhysiSim

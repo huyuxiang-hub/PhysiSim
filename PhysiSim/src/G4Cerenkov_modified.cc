@@ -1,4 +1,3 @@
-// g4-cls-copy : /usr/local/opticks_externals/g4_1042.build/geant4.10.04.p02/source/processes/electromagnetic/xrays/src/G4Cerenkov.cc
 //
 // ********************************************************************
 // * License and Disclaimer                                           *
@@ -25,13 +24,13 @@
 // ********************************************************************
 //
 //
-// $Id: LocalG4Cerenkov1042.cc 108508 2018-02-15 15:54:35Z gcosmo $
+// $Id: G4Cerenkov.cc 108508 2018-02-15 15:54:35Z gcosmo $
 //
 ////////////////////////////////////////////////////////////////////////
 // Cerenkov Radiation Class Implementation
 ////////////////////////////////////////////////////////////////////////
 //
-// File:        LocalG4Cerenkov1042.cc
+// File:        G4Cerenkov.cc
 // Description: Discrete Process -- Generation of Cerenkov Photons
 // Version:     2.1
 // Created:     1996-02-21
@@ -72,26 +71,21 @@
 #include "G4MaterialCutsCouple.hh"
 #include "G4ParticleDefinition.hh"
 
-#include "LocalG4Cerenkov1042.hh"
-
-#ifdef WITH_G4OPTICKS
-#include "G4Opticks.hh"
-#endif
-
+#include "G4Cerenkov_modified.hh"
 
 /////////////////////////
 // Class Implementation  
 /////////////////////////
 
-//G4bool LocalG4Cerenkov1042::fTrackSecondariesFirst = false;
-//G4double LocalG4Cerenkov1042::fMaxBetaChange = 0.;
-//G4int LocalG4Cerenkov1042::fMaxPhotons = 0;
+//G4bool G4Cerenkov::fTrackSecondariesFirst = false;
+//G4double G4Cerenkov::fMaxBetaChange = 0.;
+//G4int G4Cerenkov::fMaxPhotons = 0;
 
   //////////////
   // Operators
   //////////////
 
-// LocalG4Cerenkov1042::operator=(const LocalG4Cerenkov1042 &right)
+// G4Cerenkov::operator=(const G4Cerenkov &right)
 // {
 // }
 
@@ -99,14 +93,13 @@
   // Constructors
   /////////////////
 
-LocalG4Cerenkov1042::LocalG4Cerenkov1042(G4int opticksMode, const G4String& processName, G4ProcessType type)
+G4Cerenkov_modified::G4Cerenkov_modified(const G4String& processName, G4ProcessType type)
            : G4VProcess(processName, type),
              fTrackSecondariesFirst(false),
              fMaxBetaChange(0.0),
              fMaxPhotons(0),
              fStackingFlag(true),
-             fNumPhotons(0),
-             fOpticksMode(opticksMode)
+             fNumPhotons(0)
 {
   SetProcessSubType(fCerenkov);
 
@@ -117,7 +110,7 @@ LocalG4Cerenkov1042::LocalG4Cerenkov1042(G4int opticksMode, const G4String& proc
   }
 }
 
-// LocalG4Cerenkov1042::LocalG4Cerenkov1042(const LocalG4Cerenkov1042 &right)
+// G4Cerenkov::G4Cerenkov(const G4Cerenkov &right)
 // {
 // }
 
@@ -125,7 +118,7 @@ LocalG4Cerenkov1042::LocalG4Cerenkov1042(G4int opticksMode, const G4String& proc
   // Destructors
   ////////////////
 
-LocalG4Cerenkov1042::~LocalG4Cerenkov1042()
+G4Cerenkov_modified::~G4Cerenkov_modified()
 {
   if (thePhysicsTable != nullptr) {
      thePhysicsTable->clearAndDestroy();
@@ -137,7 +130,7 @@ LocalG4Cerenkov1042::~LocalG4Cerenkov1042()
   // Methods
   ////////////
 
-G4bool LocalG4Cerenkov1042::IsApplicable(const G4ParticleDefinition& aParticleType)
+G4bool G4Cerenkov_modified::IsApplicable(const G4ParticleDefinition& aParticleType)
 {
   G4bool result = false;
 
@@ -149,22 +142,22 @@ G4bool LocalG4Cerenkov1042::IsApplicable(const G4ParticleDefinition& aParticleTy
   return result;
 }
 
-void LocalG4Cerenkov1042::SetTrackSecondariesFirst(const G4bool state)
+void G4Cerenkov_modified::SetTrackSecondariesFirst(const G4bool state)
 {
   fTrackSecondariesFirst = state;
 }
 
-void LocalG4Cerenkov1042::SetMaxBetaChangePerStep(const G4double value)
+void G4Cerenkov_modified::SetMaxBetaChangePerStep(const G4double value)
 {
   fMaxBetaChange = value*CLHEP::perCent;
 }
 
-void LocalG4Cerenkov1042::SetMaxNumPhotonsPerStep(const G4int NumPhotons)
+void G4Cerenkov_modified::SetMaxNumPhotonsPerStep(const G4int NumPhotons)
 {
   fMaxPhotons = NumPhotons;
 }
 
-void LocalG4Cerenkov1042::BuildPhysicsTable(const G4ParticleDefinition&)
+void G4Cerenkov_modified::BuildPhysicsTable(const G4ParticleDefinition&)
 {
   if (!thePhysicsTable) BuildThePhysicsTable();
 }
@@ -173,7 +166,7 @@ void LocalG4Cerenkov1042::BuildPhysicsTable(const G4ParticleDefinition&)
 // -------------
 //
 G4VParticleChange*
-LocalG4Cerenkov1042::PostStepDoIt(const G4Track& aTrack, const G4Step& aStep)
+G4Cerenkov_modified::PostStepDoIt(const G4Track& aTrack, const G4Step& aStep)
 
 // This routine is called for each tracking Step of a charged particle
 // in a radiator. A Poisson-distributed number of photons is generated
@@ -186,6 +179,7 @@ LocalG4Cerenkov1042::PostStepDoIt(const G4Track& aTrack, const G4Step& aStep)
   ////////////////////////////////////////////////////
   // Should we ensure that the material is dispersive?
   ////////////////////////////////////////////////////
+
 
   aParticleChange.Initialize(aTrack);
 
@@ -234,23 +228,23 @@ LocalG4Cerenkov1042::PostStepDoIt(const G4Track& aTrack, const G4Step& aStep)
 
   fNumPhotons = (G4int) G4Poisson(MeanNumberOfPhotons);
 
-  if ( fNumPhotons <= 0 || !fStackingFlag ) {
+  // calculate the fNumPhotons1 and fNumPhotons2 {
+
+  // }
+
+
+  // if ( fNumPhotons <= 0 || !fStackingFlag ) {
+  if ( fNumPhotons <= 0 ) {
 
      // return unchanged particle and no secondaries  
 
      aParticleChange.SetNumberOfSecondaries(0);
 
+     fNumPhotons1 = 0;
+     fNumPhotons2 = 0;
+
      return pParticleChange;
 
-  }
-
-  ////////////////////////////////////////////////////////////////
-
-  aParticleChange.SetNumberOfSecondaries(fNumPhotons);
-
-  if (fTrackSecondariesFirst) {
-     if (aTrack.GetTrackStatus() == fAlive )
-                           aParticleChange.ProposeTrackStatus(fSuspend);
   }
 
   ////////////////////////////////////////////////////////////////
@@ -260,10 +254,19 @@ LocalG4Cerenkov1042::PostStepDoIt(const G4Track& aTrack, const G4Step& aStep)
   G4double dp = Pmax - Pmin;
 
   G4double nMax = Rindex->GetMaxValue();
+  if (Rindex) {
+      // nMax = Rindex->GetMaxValue();
+      size_t ri_sz = Rindex->GetVectorLength();
+   
+      for (size_t i = 0; i < ri_sz; ++i) {
+          if ((*Rindex)[i]>nMax) nMax = (*Rindex)[i];
+      }
+  }
 
   G4double BetaInverse = 1./beta;
 
   G4double maxCos = BetaInverse / nMax; 
+
   G4double maxSin2 = (1.0 - maxCos) * (1.0 + maxCos);
 
   G4double beta1 = pPreStepPoint ->GetBeta();
@@ -274,41 +277,42 @@ LocalG4Cerenkov1042::PostStepDoIt(const G4Track& aTrack, const G4Step& aStep)
   G4double MeanNumberOfPhotons2 =
                      GetAverageNumberOfPhotons(charge,beta2,aMaterial,Rindex);
 
+  fNumPhotons1 = MeanNumberOfPhotons1;
+  fNumPhotons2 = MeanNumberOfPhotons2;
 
-  if(fOpticksMode & 1) 
-  { 
-#ifdef WITH_G4OPTICKS
-      G4Opticks::Get()->collectGenstep_G4Cerenkov_1042(
-             &aTrack, 
-             &aStep, 
-             fNumPhotons,
+  if (MeanNumberOfPhotons1 <= 0.0 or MeanNumberOfPhotons2<=0.0) {
 
-             BetaInverse,
-             Pmin,
-             Pmax,
-             maxCos,
+     // return unchanged particle and no secondaries
 
-             maxSin2,
-             MeanNumberOfPhotons1,
-             MeanNumberOfPhotons2
-            );  
-#else
-       G4cout 
-           << __FILE__ << ":" << __LINE__ 
-           << " LocalG4Cerenkov1042::PostStepDoIt "
-           << " FATAL : non-zero opticksMode requires compilation -DWITH_G4OPTICKS " 
-           << " fOpticksMode " << fOpticksMode 
-           << G4endl
-           ;
-       assert(0) ;   
-#endif
+     aParticleChange.SetNumberOfSecondaries(0);
+ 
+     // Force no secondaries
+     fNumPhotons = 0;
+     fNumPhotons1 = 0;
+     fNumPhotons2 = 0;
+
+     return pParticleChange;
+
   }
 
-  if(fOpticksMode == 0 || (fOpticksMode & 2))
-  {
+  // if stacking is false, then stop the generation of Cerenkov photons
+  if (!fStackingFlag) {
+     aParticleChange.SetNumberOfSecondaries(0);
+ 
+     return pParticleChange;
+  }
+
+  ////////////////////////////////////////////////////////////////
+
+  aParticleChange.SetNumberOfSecondaries(fNumPhotons);
+
+  if (fTrackSecondariesFirst) {
+     if (aTrack.GetTrackStatus() == fAlive )
+         aParticleChange.ProposeTrackStatus(fSuspend);
+  }
+
 
   for (G4int i = 0; i < fNumPhotons; i++) {
-
       // Determine photon energy
 
       G4double rand;
@@ -318,16 +322,29 @@ LocalG4Cerenkov1042::PostStepDoIt(const G4Track& aTrack, const G4Step& aStep)
       // sample an energy
 
       do {
-         rand = G4UniformRand();	
+         rand = G4UniformRand();  
          sampledEnergy = Pmin + rand * dp; 
          sampledRI = Rindex->Value(sampledEnergy);
+
+         // check if n(E) > 1/beta
+         if (sampledRI < BetaInverse) {
+             continue;
+         }
+
          cosTheta = BetaInverse / sampledRI;  
 
+         // G4cout << "TAO --> L" << __LINE__ << ": " 
+         //        << " BetaInverse : " << BetaInverse
+         //        << " sampledRI : " << sampledRI
+         //        << " cosTheta : " << cosTheta
+         //        << G4endl;
+
          sin2Theta = (1.0 - cosTheta)*(1.0 + cosTheta);
-         rand = G4UniformRand();	
+         rand = G4UniformRand();  
 
         // Loop checking, 07-Aug-2015, Vladimir Ivanchenko
       } while (rand*maxSin2 > sin2Theta);
+
 
       // Generate random position of photon on cone surface 
       // defined by Theta 
@@ -414,14 +431,12 @@ LocalG4Cerenkov1042::PostStepDoIt(const G4Track& aTrack, const G4Step& aStep)
       aSecondaryTrack->SetParentID(aTrack.GetTrackID());
 
       aParticleChange.AddSecondary(aSecondaryTrack);
+
   }
 
-  }  // endif  (fOpticksMode == 0 || (fOpticksMode & 2))
-
-
   if (verboseLevel>0) {
-     G4cout <<"\n Exiting from LocalG4Cerenkov1042::DoIt -- NumberOfSecondaries = "
-	    << aParticleChange.GetNumberOfSecondaries() << G4endl;
+     G4cout <<"\n Exiting from G4Cerenkov_modified::DoIt -- NumberOfSecondaries = "
+      << aParticleChange.GetNumberOfSecondaries() << G4endl;
   }
 
   return pParticleChange;
@@ -431,7 +446,7 @@ LocalG4Cerenkov1042::PostStepDoIt(const G4Track& aTrack, const G4Step& aStep)
 // ---------------------------------------------
 //
 
-void LocalG4Cerenkov1042::BuildThePhysicsTable()
+void G4Cerenkov_modified::BuildThePhysicsTable()
 {
   if (thePhysicsTable) return;
 
@@ -440,7 +455,7 @@ void LocalG4Cerenkov1042::BuildThePhysicsTable()
   G4int numOfMaterials = G4Material::GetNumberOfMaterials();
 
   // create new physics table
-	
+  
   thePhysicsTable = new G4PhysicsTable(numOfMaterials);
 
   // loop for materials
@@ -525,14 +540,14 @@ void LocalG4Cerenkov1042::BuildThePhysicsTable()
 // ---------------
 //
 
-G4double LocalG4Cerenkov1042::GetMeanFreePath(const G4Track&,
+G4double G4Cerenkov_modified::GetMeanFreePath(const G4Track&,
                                            G4double,
                                            G4ForceCondition*)
 {
   return 1.;
 }
 
-G4double LocalG4Cerenkov1042::PostStepGetPhysicalInteractionLength(
+G4double G4Cerenkov_modified::PostStepGetPhysicalInteractionLength(
                                            const G4Track& aTrack,
                                            G4double,
                                            G4ForceCondition* condition)
@@ -561,6 +576,7 @@ G4double LocalG4Cerenkov1042::PostStepGetPhysicalInteractionLength(
   // particle gamma
   G4double gamma = aParticle->GetTotalEnergy()/mass;
 
+
   G4MaterialPropertiesTable* aMaterialPropertiesTable =
                                       aMaterial->GetMaterialPropertiesTable();
 
@@ -571,12 +587,18 @@ G4double LocalG4Cerenkov1042::PostStepGetPhysicalInteractionLength(
 
   G4double nMax;
   if (Rindex) {
-     nMax = Rindex->GetMaxValue();
+      // nMax = Rindex->GetMaxValue();
+      size_t ri_sz = Rindex->GetVectorLength();
+      nMax = (*Rindex)[0];
+      for (size_t i = 1; i < ri_sz; ++i) {
+          if ((*Rindex)[i]>nMax) nMax = (*Rindex)[i];
+      }
   } else {
      return StepLimit;
   }
 
   G4double BetaMin = 1./nMax;
+
   if ( BetaMin >= 1. ) return StepLimit;
 
   G4double GammaMin = 1./std::sqrt(1.-BetaMin*BetaMin);
@@ -595,14 +617,14 @@ G4double LocalG4Cerenkov1042::PostStepGetPhysicalInteractionLength(
   G4double Step = Range - RangeMin;
 //  if (Step < 1.*um ) return StepLimit;
 
+
   if (Step > 0. && Step < StepLimit) StepLimit = Step; 
 
   // If user has defined an average maximum number of photons to
   // be generated in a Step, then calculate the Step length for
   // that number of photons. 
- 
-  if (fMaxPhotons > 0) {
 
+  if (fMaxPhotons > 0) {
      // particle charge
      const G4double charge = aParticle->GetDefinition()->GetPDGCharge();
 
@@ -643,11 +665,12 @@ G4double LocalG4Cerenkov1042::PostStepGetPhysicalInteractionLength(
 //             ^^^^^^^^^^
 
 G4double
-  LocalG4Cerenkov1042::GetAverageNumberOfPhotons(const G4double charge,
+  G4Cerenkov_modified::GetAverageNumberOfPhotons(const G4double charge,
                                         const G4double beta, 
-			                const G4Material* aMaterial,
-			                G4MaterialPropertyVector* Rindex) const
+                      const G4Material* aMaterial,
+                      G4MaterialPropertyVector* Rindex) //const
 {
+
   const G4double Rfact = 369.81/(eV * cm);
 
   if(beta <= 0.0)return 0.0;
@@ -655,8 +678,8 @@ G4double
   G4double BetaInverse = 1./beta;
 
   // Vectors used in computation of Cerenkov Angle Integral:
-  // 	- Refraction Indices for the current material
-  //	- new G4PhysicsOrderedFreeVector allocated to hold CAI's
+  //  - Refraction Indices for the current material
+  //  - new G4PhysicsOrderedFreeVector allocated to hold CAI's
  
   G4int materialIndex = aMaterial->GetIndex();
 
@@ -667,12 +690,13 @@ G4double
 
   if(!(CerenkovAngleIntegrals->IsFilledVectorExist()))return 0.0;
 
+  /*
   // Min and Max photon energies 
   G4double Pmin = Rindex->GetMinLowEdgeEnergy();
   G4double Pmax = Rindex->GetMaxLowEdgeEnergy();
 
   // Min and Max Refraction Indices 
-  G4double nMin = Rindex->GetMinValue();	
+  G4double nMin = Rindex->GetMinValue();  
   G4double nMax = Rindex->GetMaxValue();
 
   // Max Cerenkov Angle Integral 
@@ -690,7 +714,7 @@ G4double
   // otherwise if n(Pmin) >= 1/Beta -- photons generated  
 
   else if (nMin > BetaInverse) {
-     dp = Pmax - Pmin;	
+     dp = Pmax - Pmin;  
      ge = CAImax; 
   } 
 
@@ -713,17 +737,191 @@ G4double
      if (verboseLevel>0) {
         G4cout << "CAImin = " << CAImin << G4endl;
         G4cout << "ge = " << ge << G4endl;
-     }
-  }
-	
-  // Calculate number of photons 
-  G4double NumPhotons = Rfact * charge/eplus * charge/eplus *
-                                 (dp - ge * BetaInverse*BetaInverse);
+      }
+      //////// old version ///////////
 
-  return NumPhotons;		
+  }
+ 
+        */
+     ///////// new version ///////////
+
+    G4int    cross_num;
+    // G4double cross_up[10];   // max crossing point number : 10
+    // G4double cross_down[10];   // max crossing point number : 10
+    std::vector<double> the_energies_threshold; // there are several pairs (ranges) at the threshold of 1/beta
+    // [ E_l_0, E_r_0, E_l_1, E_r_1, ... ]
+    // the energies between [E_l_i, E_r_i] is above the threshold.
+
+     cross_num = 0;
+     size_t vec_length = Rindex->GetVectorLength();
+
+     G4double maxRI=(*Rindex)[0]; G4double minRI=(*Rindex)[0];
+     for (size_t ii = 1;
+             ii < vec_length;
+             ++ii) {
+         G4double currentRI = (*Rindex)[ii];
+         if (currentRI > maxRI) maxRI = currentRI;
+         if (currentRI < minRI) minRI = currentRI;
+     }
+
+     if (BetaInverse <= minRI) { // All range is OK!
+
+         // cross_up[0] = Rindex->Energy(0);
+         // cross_down[0] = Rindex->Energy(vec_length-1);
+         cross_num = 1;
+
+         the_energies_threshold.push_back(Rindex->Energy(0));
+         the_energies_threshold.push_back(Rindex->Energy(vec_length-1));
+
+         //G4cout << "Range [ " << cross_up[0] << ", " << cross_down[0] << "]" << G4endl;
+
+     } else if (BetaInverse >= maxRI) { // Out of Range 
+         cross_num = 0;
+
+     } else {   // between min and max
+
+         // below is impl by Tao Lin
+         double currentRI = (*Rindex)[0];
+         double currentPM = Rindex->Energy(0);
+
+         // first point
+         if (currentRI >= BetaInverse) {
+             the_energies_threshold.push_back(currentPM);
+         }
+
+         // middle points
+         if (vec_length>2) {
+             for (size_t ii = 1; ii < vec_length-1; ++ii) {
+                 double prevRI = (*Rindex)[ii-1];
+                 double prevPM = Rindex->Energy(ii-1);
+                 double currentRI = (*Rindex)[ii];
+                 double currentPM = Rindex->Energy(ii);
+
+                 // two case here
+                 if ( (prevRI >= BetaInverse and currentRI < BetaInverse)
+                      or (prevRI < BetaInverse and currentRI >= BetaInverse) ) {
+                     double energy_threshold = (BetaInverse-prevRI)/(currentRI-prevRI)*(currentPM-prevPM) + prevPM;
+                     the_energies_threshold.push_back(energy_threshold);
+                 }
+             
+             }
+         }
+
+         // last point
+         currentRI = (*Rindex)[vec_length-1];
+         currentPM = Rindex->Energy(vec_length-1);
+         if (currentRI >= BetaInverse) {
+             the_energies_threshold.push_back(currentPM);
+         }
+
+         if ((the_energies_threshold.size()%2) != 0) {
+             G4cerr << "ERROR: missing endpoint for the_energies_threshold? "
+                    << "The size of the_energies_threshold is "
+                    << the_energies_threshold.size()
+                    << G4endl;
+         }
+
+         cross_num = the_energies_threshold.size() / 2;
+         // for (int i = 0; i < cross_num; ++i) {
+         //     cross_up[i] = the_energies_threshold[i*2];
+         //     cross_down[i] = the_energies_threshold[i*2+1];
+         // }
+
+         // END
+
+         // // below is impl by Miao Yu
+
+         // G4double up_leftx[10], up_lefty[10];
+         // G4double up_rightx[10], up_righty[10];
+         // G4double down_leftx[10], down_lefty[10];
+         // G4double down_rightx[10], down_righty[10];
+         // G4double extremex[10], extremey[10];
+         // G4int num0 = 0;
+         // G4int num1 = 0;
+         // G4int num2 = 0;
+
+         // double currentRI = (*Rindex)[0];
+         // double currentPM = Rindex->Energy(0);
+         // if (currentRI == BetaInverse) {
+         //     extremex[num2] =  currentPM; 
+         //     extremey[num2] = currentRI;
+         //     num2++;
+         // }
+
+         // for (size_t ii = 1;
+         //         ii < vec_length;
+         //         ++ii) {
+         //     double prevRI = (*Rindex)[ii-1];
+         //     double prevPM = Rindex->Energy(ii-1);
+         //     double currentRI = (*Rindex)[ii];
+         //     double currentPM = Rindex->Energy(ii);
+
+         //     if(prevRI < BetaInverse and currentRI > BetaInverse) { // up
+         //         up_leftx[num0] = prevPM;
+         //         up_rightx[num0] = currentPM;
+         //         up_lefty[num0] = prevRI;
+         //         up_righty[num0] = currentRI;
+         //         num0++;
+         //     } else if(prevRI > BetaInverse and currentRI < BetaInverse) {
+         //         down_leftx[num1] = prevPM;
+         //         down_rightx[num1] = currentPM;
+         //         down_lefty[num1] = prevRI;
+         //         down_righty[num1] = currentRI;
+         //         num1++;
+         //     } else if (currentRI == BetaInverse) {
+         //         extremex[num2] = currentPM;
+         //         extremey[num2] = currentRI;
+         //         num2++;
+         //     }
+         // }
+
+         // if (num0 - num1 == 1) // up > down
+         // {
+         //     down_leftx[num1] = Rindex->Energy(vec_length-1);
+         //     down_rightx[num1] = down_leftx[num1];
+         //     down_lefty[num1] = (*Rindex)[vec_length-1];
+         //     down_righty[num1] = down_lefty[num1];
+         //     num1++;
+         // } else if(num1 - num0 == 1) {
+         //     up_leftx[num0] = Rindex->Energy(0);
+         //     up_rightx[num0] = up_leftx[num0];
+         //     up_lefty[num0] = (*Rindex)[0];
+         //     up_righty[num0] = up_lefty[num0];
+         //     num0++;
+         // }
+
+         // if(num0 != num1) G4cout << "Error: Vector Length Mismatching ! " << G4endl;
+
+         // // linear-interpolation for crossing points:
+         // for (int i=0; i<num0; i++) {
+
+         //     if (up_leftx[i] == up_rightx[i]) cross_up[i] = up_leftx[i];
+         //     else cross_up[i] = (BetaInverse-up_lefty[i])/(up_righty[i] - up_lefty[i])*(up_rightx[i]-up_leftx[i]) + up_leftx[i];
+         //     if (down_leftx[i] == down_rightx[i]) cross_down[i] = down_leftx[i];
+         //     else cross_down[i] = (BetaInverse-down_lefty[i])/(down_righty[i] - down_lefty[i])*(down_rightx[i]-down_leftx[i]) + down_leftx[i];
+         //     cross_num++;
+
+         //     //G4cout << "Range [ " << cross_up[i] << ", " << cross_down[i] << "]" << G4endl;
+         // }
+     }
+     G4double dp1 = 0; G4double ge1 = 0;
+     for (int i=0; i<cross_num; i++) {
+        dp1 += the_energies_threshold[2*i+1] - the_energies_threshold[2*i];
+        G4bool isOutRange;
+        ge1 += CerenkovAngleIntegrals->GetValue(the_energies_threshold[2*i+1], isOutRange) 
+               - CerenkovAngleIntegrals->GetValue(the_energies_threshold[2*i], isOutRange);
+     }
+
+  // Calculate number of photons 
+  //G4double NumPhotons = Rfact * charge/eplus * charge/eplus *
+  //                               (dp - ge * BetaInverse*BetaInverse);
+  G4double NumPhotons = Rfact * charge/eplus * charge/eplus *
+         (dp1 - ge1 * BetaInverse*BetaInverse);
+
+  return NumPhotons;    
 }
 
-void LocalG4Cerenkov1042::DumpPhysicsTable() const
+void G4Cerenkov_modified::DumpPhysicsTable() const
 {
   G4int PhysicsTableSize = thePhysicsTable->entries();
   G4PhysicsOrderedFreeVector *v;
@@ -734,4 +932,4 @@ void LocalG4Cerenkov1042::DumpPhysicsTable() const
   }
 }
 
-// g4-cls-copy : /usr/local/opticks_externals/g4_1042.build/geant4.10.04.p02/source/processes/electromagnetic/xrays/src/G4Cerenkov.cc
+

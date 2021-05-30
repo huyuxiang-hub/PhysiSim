@@ -3,6 +3,7 @@
 #include "DsPhysConsOptical.h"
 
 #include "G4Cerenkov.hh"
+#include "G4Cerenkov_modified.hh"
 #ifdef WITH_G4OPTICKS
 #include "LocalG4Cerenkov1042.hh"
 #endif
@@ -35,12 +36,14 @@ DsPhysConsOptical::DsPhysConsOptical(const G4String& name): G4VPhysicsConstructo
 {
     declProp("OpticksMode", m_opticksMode=0);
     declProp("CerenMaxPhotonsPerStep", m_cerenMaxPhotonPerStep = 300);
+    declProp("CerenPhotonStack", m_cerenPhotonStack = true);
 
     declProp("ScintDoReemission", m_doReemission = true);
     declProp("ScintDoScintAndCeren", m_doScintAndCeren = true);
     declProp("ScintDoReemissionOnly", m_doReemissionOnly = false);
 
     declProp("UseCerenkov", m_useCerenkov=true);
+    declProp("UseCerenkovType", m_useCerenkovType="modified");
     declProp("ApplyWaterQe", m_applyWaterQe=true);
 
     declProp("UseScintillation", m_useScintillation=true);
@@ -88,13 +91,32 @@ void DsPhysConsOptical::ConstructParticle()
 void DsPhysConsOptical::ConstructProcess()
 {
     G4VProcess* cerenkov_ = 0;
+  
+    LogInfo<<"check: m_useCerenKov == "<< m_useCerenkov <<std::endl;
+    LogInfo<<"check: m_useScintillation == "<< m_useScintillation  <<std::endl;
+    LogInfo<<"check:  m_useScintSimple == "<<  m_useScintSimple <<std::endl;
     if (m_useCerenkov) {
         if( m_opticksMode == 0 )
         {
-            G4Cerenkov* cerenkov = new G4Cerenkov() ;
-            cerenkov->SetMaxNumPhotonsPerStep(m_cerenMaxPhotonPerStep);
-            cerenkov->SetTrackSecondariesFirst(m_doTrackSecondariesFirst);
-            cerenkov_ = cerenkov ;
+            if (m_useCerenkovType == "modified") {
+                G4Cerenkov_modified* cerenkov = new G4Cerenkov_modified() ;
+                cerenkov->SetMaxNumPhotonsPerStep(m_cerenMaxPhotonPerStep);
+                cerenkov->SetStackPhotons(m_cerenPhotonStack);
+                cerenkov->SetTrackSecondariesFirst(m_doTrackSecondariesFirst);
+                cerenkov_ = cerenkov ;
+            } else if (m_useCerenkovType == "original") {
+                G4Cerenkov* cerenkov = new G4Cerenkov() ;
+                cerenkov->SetMaxNumPhotonsPerStep(m_cerenMaxPhotonPerStep);
+                cerenkov->SetStackPhotons(m_cerenPhotonStack);
+                cerenkov->SetTrackSecondariesFirst(m_doTrackSecondariesFirst);
+                cerenkov_ = cerenkov ;
+            } else {
+                G4cerr << __FILE__ << ":" << __LINE__
+                       << " Unknown m_useCerenkovType: '"
+                       << m_useCerenkovType << "'"
+                       << G4endl;
+                assert(0);
+            }
 
         } else {
 #ifdef WITH_G4OPTICKS
@@ -246,7 +268,10 @@ void DsPhysConsOptical::ConstructProcess()
             pmanager->AddDiscreteProcess(boundproc);
             //pmanager->AddDiscreteProcess(pee);
             if (m_doFastSim) {
+                std::cout << "############## Using new PMT optical model!!! " << std::endl;
                 pmanager->AddDiscreteProcess(fast_sim_man);
+            } else {
+                std::cout << "############## Using old PMT optical model!!! " << std::endl;
             }
         }*/
           if(particle==G4OpticalPhoton:: Definition()){

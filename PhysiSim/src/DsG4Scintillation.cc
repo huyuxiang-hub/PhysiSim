@@ -356,7 +356,7 @@ DsG4Scintillation::PostStepDoIt(const G4Track& aTrack, const G4Step& aStep)
         
         G4double ScintillationYield = 0;
         {// Yield.  Material must have this or we lack raisins dayetras
-            const G4MaterialPropertyVector* ptable =
+           /* const G4MaterialPropertyVector* ptable =
                 aMaterialPropertiesTable->GetProperty("SCINTILLATIONYIELD");
             if (!ptable) {
                 G4cout << "ConstProperty: failed to get SCINTILLATIONYIELD"
@@ -364,6 +364,9 @@ DsG4Scintillation::PostStepDoIt(const G4Track& aTrack, const G4Step& aStep)
                 return G4VRestDiscreteProcess::PostStepDoIt(aTrack, aStep);
             }
             ScintillationYield = ptable->Value(0);
+            std::cout<<"sci ScintillationYield = "<<ScintillationYield<<std::endl;*/
+            ScintillationYield = aMaterialPropertiesTable->GetConstProperty("SCINTILLATIONYIELD");
+           // std::cout<<"sci const ScintillationYield = "<<ScintillationYield<<std::endl;
         }
 
         G4double ResolutionScale    = 1;
@@ -547,6 +550,10 @@ DsG4Scintillation::PostStepDoIt(const G4Track& aTrack, const G4Step& aStep)
                 }
             }
             else {
+                   std::cout<<"ExcitationRatio == "<< ExcitationRatio << std::endl;
+                   std::cout<<" YieldRatio = " << YieldRatio << std::endl;                
+  
+
                 if ( ExcitationRatio == 1.0 ) {
                   Num = G4int( 0.5 +  (min(YieldRatio,1.0) * NumTracks) );  // round off, not truncation
                 }
@@ -580,7 +587,7 @@ DsG4Scintillation::PostStepDoIt(const G4Track& aTrack, const G4Step& aStep)
         
         // Max Scintillation Integral
 
-        if(m_opticksMode > 0 && Num > 0 && !flagReemission)
+        if((m_opticksMode & 1) && Num > 0 && !flagReemission)
         {
 #ifdef WITH_G4OPTICKS
             G4Opticks::Get()->collectGenstep_DsG4Scintillation_r3971(
@@ -604,7 +611,11 @@ DsG4Scintillation::PostStepDoIt(const G4Track& aTrack, const G4Step& aStep)
             assert(0) ;   
 #endif
         }
-                
+               
+
+        if( m_opticksMode == 0 || (m_opticksMode & 2) )
+        {
+ 
         for (G4int i = 0; i < Num; i++) { //Num is # of 2ndary tracks now
             // Determine photon energy
 
@@ -769,7 +780,11 @@ DsG4Scintillation::PostStepDoIt(const G4Track& aTrack, const G4Step& aStep)
             // until Geant4.7 (and beyond?)
             //  -- maybe not required if SetWeightByProcess(true) called,
             //  but we do both, just to be sure)
-        }
+
+        }   // end loop over Num secondary photons
+
+        }   // (opticksMode == 0) || (opticksMode & 2 )   : opticks not enabled, or opticks enabled and doing Geant4 comparison
+
     } // end loop over fast/slow scints
 
     if (verboseLevel > 0) {
