@@ -329,11 +329,12 @@ DsG4Scintillation::PostStepDoIt(const G4Track& aTrack, const G4Step& aStep)
     
   //-----------------------------------------------------//
 
-    G4int nscnt = 1;
+   /* G4int nscnt = 1;
     if (Fast_Intensity && Slow_Intensity) nscnt = 2;
     if ( verboseLevel > 0) {
       G4cout << " Fast_Intensity " << Fast_Intensity << " Slow_Intensity " << Slow_Intensity << " nscnt " << nscnt << G4endl;
-    }
+    }*/
+
     G4StepPoint* pPreStepPoint  = aStep.GetPreStepPoint();
     G4StepPoint* pPostStepPoint = aStep.GetPostStepPoint();
 
@@ -342,7 +343,7 @@ DsG4Scintillation::PostStepDoIt(const G4Track& aTrack, const G4Step& aStep)
     G4double      t0 = pPreStepPoint->GetGlobalTime();
      
 
-    std::cout<<"flagReemission == "<<flagReemission<<std::endl;
+    //std::cout<<"flagReemission == "<<flagReemission<<std::endl;
     //Replace NumPhotons by NumTracks
     G4int NumTracks=0;
     G4double weight=1.0;
@@ -511,11 +512,13 @@ DsG4Scintillation::PostStepDoIt(const G4Track& aTrack, const G4Step& aStep)
    
 
     G4double pro_com = 0 ;
-    G4int scnt = 0 ;
+    size_t nscnt = Ratio_timeconstant->GetVectorLength();
+
+    //G4int scnt = 0 ;
 
     //---debug---// 
     G4String particle = "" ;
-    std::cout << "NumTracks:" << NumTracks << std::endl;
+   // std::cout << "NumTracks:" << NumTracks << std::endl;
     if (aParticleName == "opticalphoton") {
       particle = aParticleName;
     }
@@ -535,33 +538,21 @@ DsG4Scintillation::PostStepDoIt(const G4Track& aTrack, const G4Step& aStep)
     }*/
 
 
-    for ( G4int i = 0 ; i < NumTracks ; i++ ){
+    
+    //     std::cout <<"particle = "<<particle<< " scnt = " <<scnt << " time_constant = " << ScintillationTime << " yield_ratio = "<< Ratio_timeconstant->Energy(scnt)<<" p_tot = "<<p_tot<<std::endl ;
 
+      //   if (!ScintillationIntegral) continue;
+
+
+/////////////////////////////////////////////////////////////////////////
+   if (aParticleName != "opticalphoton") {
+     
+    //   std::cout<<"NumTracks = "<< NumTracks<<std::endl ;
+  }
+    for(G4int scnt = 0 ; scnt < nscnt ; scnt++){
+
+         G4double ScintillationTime = 0.*ns;
          G4PhysicsOrderedFreeVector* ScintillationIntegral = NULL;
-         size_t nscnt = Ratio_timeconstant->GetVectorLength();
-         G4double ScintillationTime = 0.*ns; 
-         G4double p_tot = 0 ;
-         pro_com = G4UniformRand();
-         for ( G4int j = 0 ; j < nscnt ; j++){
-             p_tot += (*Ratio_timeconstant)[j];
-             if ( pro_com < p_tot ){
-               ScintillationTime = Ratio_timeconstant->Energy(j) ; 
-               scnt = j ;
-               break;
-             }
-         }         
-       
-
-         if (!flagDecayTimeFast && scnt == 0){
-               ScintillationTime = 0.*ns  ;
-         }
-         
-         if (!flagDecayTimeSlow && scnt != 0){
-
-               ScintillationTime = 0.*ns  ;
-         }          
-
-
 
          if ( scnt == 0 ){
               ScintillationIntegral =
@@ -570,17 +561,25 @@ DsG4Scintillation::PostStepDoIt(const G4Track& aTrack, const G4Step& aStep)
          else{
               ScintillationIntegral =
                     (G4PhysicsOrderedFreeVector*)((*theSlowIntegralTable)(materialIndex));
+         }         
+         
+         G4int m_Num =G4int(NumTracks * (*Ratio_timeconstant)[scnt]);
+         ScintillationTime = Ratio_timeconstant->Energy(scnt);
+         if (!flagDecayTimeFast && scnt == 0){
+               ScintillationTime = 0.*ns  ;
          }
-    
-         std::cout <<"particle = "<<particle<< " scnt = " <<scnt << " time_constant = " << ScintillationTime << " yield_ratio = "<< Ratio_timeconstant->Energy(scnt)<<" p_tot = "<<p_tot<<std::endl ;
 
-         if (!ScintillationIntegral) continue;
+         if (!flagDecayTimeSlow && scnt != 0){
+
+               ScintillationTime = 0.*ns  ;
+         }
+
+        // std::cout <<"particle = "<<particle<< " scnt = " <<scnt << " time_constant = " << ScintillationTime << " yield_ratio = "<< (*Ratio_timeconstant)[scnt] <<" m_Num = "<<m_Num<<std::endl;
 
 
-
-         G4double sampledEnergy;
-            
-         if ( !flagReemission ) {
+         for(G4int i = 0 ; i < m_Num ; i++) {
+           G4double sampledEnergy;
+           if ( !flagReemission ) {
                 // normal scintillation
                G4double CIIvalue = G4UniformRand()*
                     ScintillationIntegral->GetMaxValue();
@@ -709,7 +708,7 @@ DsG4Scintillation::PostStepDoIt(const G4Track& aTrack, const G4Step& aStep)
             aSecondaryTrack->SetWeight( weight );
             if ( verboseLevel > 0 ) {
               G4cout << " aSecondaryTrack->SetWeight( " << weight<< " ) ; aSecondaryTrack->GetWeight() = " << aSecondaryTrack->GetWeight() << G4endl;}        
-      
+         }    
    
    }
 
